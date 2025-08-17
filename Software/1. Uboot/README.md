@@ -80,13 +80,13 @@
     ```bash
     gpio toggle 118
     ```
-    This command will toggle onboard red LED (LED inside case, near USB port). Since this kind of hard to see. We run another command.
+    This command will toggle onboard red LED (LED inside case, near USB port). Since this kind of hard to see, we run another command.
     ```bash
     gpio toggle 123
     ```
     This command will toggle LCD backlight.
 
-    How to know the number of GPIO, number 118 and 123 coming from ? Inspsec the schematic file, we can see GPIO used to control backlight is GPIO3_D3_d. Now conver that GPIO number to the number that u-boot understand.
+    How to know the number of GPIO, number 118 and 123 coming from ? Inspsect the schematic file, we can see GPIO used to control backlight is GPIO3_D3_d. Now convert that GPIO number to the number that u-boot understand.
         <p>
         <img src="./images/GPIO_backlight.png"/>
         <img src="./images/GPIO_calculate.png"/>
