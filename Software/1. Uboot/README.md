@@ -9,6 +9,18 @@
 
     ...
 
+# Download SDK
+- Install dependencies:
+    ```bash
+    sudo apt update
+
+    sudo apt-get install -y git ssh make gcc gcc-multilib g++-multilib module-assistant expect g++ gawk texinfo libssl-dev bison flex fakeroot cmake unzip gperf autoconf device-tree-compiler libncurses5-dev pkg-config bc python-is-python3 passwd openssl openssh-server openssh-client vim file cpio rsync
+    ```
+
+- Get SDK:
+    ```bash
+    git clone https://github.com/LuckfoxTECH/luckfox-pico.git
+    ```
 # Inspect config file (u-boot config focused)
 - This file is a make script provided by the Luckfox team to simplify the build process. `../luckfox-pico/project/cfg/BoardConfig_IPC/BoardConfig-EMMC-Buildroot-RV1106_Luckfox_Pico_Ultra_W-IPC.mk`
     
