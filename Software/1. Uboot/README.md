@@ -1,13 +1,50 @@
-# Install driver and tool
-1. Download and install ...
-
 # Flashing eMMC
-1. Set device to recovery mode
+## 1. Install driver
 
-    ...
-2. Flashing
+- Run [DriverInstall.exe](../../Tools/Driver/DriverAssitant_v5.12/DriverInstall.exe) to install the USB driver. No need to connect anything during this process. **Restart your computer** after the installation is complete.
+<p align="center">
+    <img src="images/Pasted image 20250820011401.png" width="500">
+</p>
 
-    ...
+## 2. Set device to recovery mode
+- Open the flashing tool [SocToolKit.exe](../../Tools/SocToolKit_v1.98/SocToolKit.exe) (right-click and run as administrator), Select RV1106.
+<p align="center">
+    <img src="images/Pasted image 20250820011207.png" width="700">
+</p>
+
+**Recovery mode** allows:
+- The host PC to communicate directly with the SoC bootloader/ROM code.
+- Bypasses the current OS on the eMMC/SD → to reload the firmware, bootloader or new OS.
+
+In recovery mode of the Luckfox Pico Ultra W, the device will be recognized as a MaskRom device by the Rockchip flashing tool.
+
+<p align="center">
+    <img src="images/20250820-0208159.png">
+</p>
+
+- Hold down the BOOT button (the ENCODER button works equivalently), then connect the device to your computer. Release the button, and the Rockchip flashing tool will detect the device as a MaskRom device.
+
+<p align="center">
+    <img src="images/Pasted image 20250820022242.png" width="300">
+</p>
+
+## 3. Flashing
+
+- eMMC firmware for Luckfox Pico Ultra W is located at: [eMMC_Images_0429](../../Tools/eMMC_Images_0429)
+- Click `Search Path...` and select the folder containing the firmware files.
+<p align="center">
+    <img src="images/Pasted image 20250820023719.png" width="700">
+</p>
+
+- Then, Click `Yes` to reload the env file
+<p align="center">
+    <img src="images/Pasted image 20250820022858.png" width="700">
+</p>
+
+- Select all items and click `Download` button
+<p align="center">
+    <img src="images/Pasted image 20250820023433.png" width="700">
+</p>
 
 # Download SDK
 - Install dependencies:
@@ -24,7 +61,6 @@
 # Inspect config file (u-boot config focused)
 - This file is a make script provided by the Luckfox team to simplify the build process. `../luckfox-pico/project/cfg/BoardConfig_IPC/BoardConfig-EMMC-Buildroot-RV1106_Luckfox_Pico_Ultra_W-IPC.mk`
     
-
 - This line specifies the defconfig file being used: `luckfox_rv1106_uboot_custom_defconfig`, located in the `../luckfox-pico/sysdrv/source/uboot/u-boot/configs/` folder.
     ```bash
     export RK_UBOOT_DEFCONFIG=luckfox_rv1106_uboot_custom_defconfig
