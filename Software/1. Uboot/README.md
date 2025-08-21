@@ -16,13 +16,20 @@
 - The host PC to communicate directly with the SoC bootloader/ROM code.
 - Bypasses the current OS on the eMMC/SD → to reload the firmware, bootloader or new OS.
 
-In recovery mode of the Luckfox Pico Ultra W, the device will be recognized as a MaskRom device by the Rockchip flashing tool.
+In recovery mode of the Luckfox Pico Ultra W, the device will be recognized as a MaskRom device by the Rockchip flashing tool. There are two methods to enter recovery mode:
 
 <p align="center">
     <img src="images/20250820-0208159.png">
 </p>
 
-- Hold down the BOOT button (the ENCODER button works equivalently), then connect the device to your computer. Release the button, and the Rockchip flashing tool will detect the device as a MaskRom device.
+**Method 1:** Hold down the **BOOT button** (the **ENCODER button** works equivalently), then connect the device to your computer. Release the button, and the Rockchip flashing tool will detect the device as a MaskRom device.
+
+**Method 2:** Press the **RESET button**, then continuously press `Ctrl+C` on the serial console to interrupt the U-Boot autoboot process. 
+<p align="center">
+    <img src="images/Pasted image 20250821231909.png" width="500">
+</p>
+
+From here, you can run the **`download`** command → this also switches the board into **recovery mode**.
 
 <p align="center">
     <img src="images/Pasted image 20250820022242.png" width="300">
