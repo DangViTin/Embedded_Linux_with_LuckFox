@@ -1,71 +1,8 @@
-# Flashing eMMC
-## 1. Install driver
+# Custom Defconfig and GPIO
 
-- Run [DriverInstall.exe](../../Tools/Driver/DriverAssitant_v5.12/DriverInstall.exe) to install the USB driver. No need to connect anything during this process. **Restart your computer** after the installation is complete.
-<p align="center">
-    <img src="images/Pasted image 20250820011401.png" width="500">
-</p>
+In this article, we learn how to customize U-Boot on Luckfox Pico Ultra W by creating a custom defconfig, rebuilding, and using the U-Boot console to control GPIOs.
 
-## 2. Set device to recovery mode
-- Open the flashing tool [SocToolKit.exe](../../Tools/SocToolKit_v1.98/SocToolKit.exe) (right-click and run as administrator), Select RV1106.
-<p align="center">
-    <img src="images/Pasted image 20250820011207.png" width="700">
-</p>
-
-**Recovery mode** allows:
-- The host PC to communicate directly with the SoC bootloader/ROM code.
-- Bypasses the current OS on the eMMC/SD → to reload the firmware, bootloader or new OS.
-
-In recovery mode of the Luckfox Pico Ultra W, the device will be recognized as a MaskRom device by the Rockchip flashing tool. There are two methods to enter recovery mode:
-
-<p align="center">
-    <img src="images/20250820-0208159.png">
-</p>
-
-**Method 1:** Hold down the **BOOT button** (the **ENCODER button** works equivalently), then connect the device to your computer. Release the button, and the Rockchip flashing tool will detect the device as a MaskRom device.
-
-**Method 2:** Press the **RESET button**, then continuously press `Ctrl+C` on the serial console to interrupt the U-Boot autoboot process. 
-<p align="center">
-    <img src="images/Pasted image 20250821231909.png" width="500">
-</p>
-
-From here, you can run the **`download`** command → this also switches the board into **recovery mode**.
-
-<p align="center">
-    <img src="images/Pasted image 20250820022242.png" width="300">
-</p>
-
-## 3. Flashing
-
-- eMMC firmware for Luckfox Pico Ultra W is located at: [eMMC_Images_0429](../../Tools/eMMC_Images_0429)
-- Click `Search Path...` and select the folder containing the firmware files.
-<p align="center">
-    <img src="images/Pasted image 20250820023719.png" width="700">
-</p>
-
-- Then, Click `Yes` to reload the env file
-<p align="center">
-    <img src="images/Pasted image 20250820022858.png" width="700">
-</p>
-
-- Select all items and click `Download` button
-<p align="center">
-    <img src="images/Pasted image 20250820023433.png" width="700">
-</p>
-
-# Download SDK
-- Install dependencies:
-    ```bash
-    sudo apt update
-
-    sudo apt-get install -y git ssh make gcc gcc-multilib g++-multilib module-assistant expect g++ gawk texinfo libssl-dev bison flex fakeroot cmake unzip gperf autoconf device-tree-compiler libncurses5-dev pkg-config bc python-is-python3 passwd openssl openssh-server openssh-client vim file cpio rsync
-    ```
-
-- Get SDK:
-    ```bash
-    git clone https://github.com/LuckfoxTECH/luckfox-pico.git
-    ```
-# Inspect config file (u-boot config focused)
+## Inspect config file (u-boot config focused)
 - This file is a make script provided by the Luckfox team to simplify the build process. `../luckfox-pico/project/cfg/BoardConfig_IPC/BoardConfig-EMMC-Buildroot-RV1106_Luckfox_Pico_Ultra_W-IPC.mk`
     
 - This line specifies the defconfig file being used: `luckfox_rv1106_uboot_custom_defconfig`, located in the `../luckfox-pico/sysdrv/source/uboot/u-boot/configs/` folder.
@@ -97,8 +34,8 @@ From here, you can run the **`download`** command → this also switches the boa
         ```
 
     - For example, we change boot delay parameter to 3 seconds at config UI
-        <p>
-        <img src="./images/menuconfig.png"/>
+        <p align="center">
+        <img src="../99. Images/menuconfig.png"/>
         </p>
 
 3. Build u-boot with new defconfig file
@@ -119,13 +56,13 @@ From here, you can run the **`download`** command → this also switches the boa
     
     - Using the flashing tool, write 4 files to eMMC. For this test, we will intentionally corrupt the kernel address by flashing U-Boot to the kernel partition. This prevents the kernel from loading and forces the system to stop at U-Boot. It only needs to be done once, since our focus is on U-Boot for now.
 
-        <p>
-        <img src="./images/flashing.png"/>
+        <p align="center">
+        <img src="../99. Images/flashing.png"/>
         </p>
 
 4. Check the UART console
-        <p>
-        <img src="./images/terminal.png"/>
+        <p align="center">
+        <img src="../99. Images/terminal.png"/>
         </p>
 
     - You can see that U-Boot waits for 3 seconds before attempting to boot the kernel. Since the kernel cannot load, the boot process fails and control returns to the U-Boot console.
@@ -142,7 +79,7 @@ From here, you can run the **`download`** command → this also switches the boa
     This command will toggle LCD backlight.
 
     How to know the number of GPIO, number 118 and 123 coming from ? Inspsect the schematic file, we can see GPIO used to control backlight is GPIO3_D3_d. Now convert that GPIO number to the number that u-boot understand.
-        <p>
-        <img src="./images/GPIO_backlight.png"/>
-        <img src="./images/GPIO_calculate.png"/>
+        <p align="center">
+        <img src="../99. Images/GPIO_backlight.png"/>
+        <img src="../99. Images/GPIO_calculate.png"/>
         </p>
