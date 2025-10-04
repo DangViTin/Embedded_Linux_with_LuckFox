@@ -1,0 +1,51 @@
+# Boot Logo
+
+To update the boot logo, prepare a **logo_linux_clut224.ppm** file in **plain PPM (ASCII)** format with 224 colors, then replace the existing file:
+
+```
+luckfox-Pico/sysdrv/source/kernel/drivers/video/logo/logo_linux_clut224.ppm
+```
+
+and rebuild the kernel image.
+
+---
+
+## Script: `create_ppm_logo.sh`
+
+```bash
+#!/bin/bash
+# Convert PNG to plain PPM (224 colors) and clean up intermediates
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <input.png> [output.ppm]"
+    exit 1
+fi
+
+INPUT=$1
+OUTPUT=${2:-LOGO.ppm}
+BASENAME=$(basename "$INPUT" .png)
+
+pngtopnm "$INPUT" > "${BASENAME}.pnm"
+pnmquant 224 "${BASENAME}.pnm" > "${BASENAME}224.pnm"
+pnmtoplainpnm "${BASENAME}224.pnm" > "$OUTPUT"
+
+rm -f "${BASENAME}.pnm" "${BASENAME}224.pnm"
+
+echo "✅ Done! Generated: $OUTPUT"
+```
+
+---
+
+## Usage
+
+```bash
+# Make script executable
+chmod +x create_ppm_logo.sh
+
+# Convert input.png to logo_linux_clut224.ppm
+./create_ppm_logo.sh input.png logo_linux_clut224.ppm
+```
+
+---
+
+👉 Replace the generated file in the kernel source, rebuild, and your new boot logo will be applied.
